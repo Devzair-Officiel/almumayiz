@@ -34,11 +34,12 @@ function Header({ locale, copy }: { locale: Locale; copy: Dictionary }) {
         </Link>
         <nav className="desktop-nav" aria-label="Navigation principale">
           {links.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
+          <Link href={`/${locale}/blog`}>{copy.nav.blog}</Link>
         </nav>
         <div className="header-actions"><LanguageLinks locale={locale} /><a className="button button-dark header-quote" href="#contact">{copy.nav.quote}</a></div>
         <details className="mobile-menu">
           <summary aria-label="Menu"><span /><span /><span /></summary>
-          <nav>{links.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}<LanguageLinks locale={locale} /><a className="button button-dark" href="#contact">{copy.nav.quote}</a></nav>
+          <nav>{links.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}<Link href={`/${locale}/blog`}>{copy.nav.blog}</Link><LanguageLinks locale={locale} /><a className="button button-dark" href="#contact">{copy.nav.quote}</a></nav>
         </details>
       </header>
     </>
@@ -131,7 +132,7 @@ function Faq({ copy }: { copy: Dictionary }) {
 
 function Footer({ locale, copy }: { locale: Locale; copy: Dictionary }) {
   return (
-    <footer><div className="page-shell footer-main"><div><Image src="/images/brand/wordmark-cream.png" width={661} height={134} alt="AL MUMAYIZ" /><p>{copy.footer.tagline}</p><a className="footer-whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp · <bdi>{WHATSAPP_DISPLAY}</bdi></a></div><div><a href="#products">{copy.nav.products}</a><a href="#factory">{copy.nav.factory}</a><a href="#contact">{copy.nav.quote}</a><Link href={`/${locale}/mentions-legales`}>{copy.footer.legal}</Link><Link href={`/${locale}/confidentialite`}>{copy.footer.privacy}</Link></div><LanguageLinks locale={locale} /></div><div className="page-shell footer-bottom"><span>© {new Date().getFullYear()} AL MUMAYIZ. {copy.footer.rights}</span><a href="https://devzair.com" target="_blank" rel="noreferrer">devzair</a></div></footer>
+    <footer><div className="page-shell footer-main"><div><Image src="/images/brand/wordmark-cream.png" width={661} height={134} alt="AL MUMAYIZ" /><p>{copy.footer.tagline}</p><a className="footer-whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp · <bdi>{WHATSAPP_DISPLAY}</bdi></a></div><div><a href="#products">{copy.nav.products}</a><a href="#factory">{copy.nav.factory}</a><Link href={`/${locale}/blog`}>{copy.nav.blog}</Link><a href="#contact">{copy.nav.quote}</a><Link href={`/${locale}/mentions-legales`}>{copy.footer.legal}</Link><Link href={`/${locale}/confidentialite`}>{copy.footer.privacy}</Link></div><LanguageLinks locale={locale} /></div><div className="page-shell footer-bottom"><span>© {new Date().getFullYear()} AL MUMAYIZ. {copy.footer.rights}</span><a href="https://devzair.com" target="_blank" rel="noreferrer">devzair</a></div></footer>
   );
 }
 

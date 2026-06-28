@@ -10,6 +10,8 @@ services:
       - "3000"
     env_file:
       - .env
+    volumes:
+      - almumayiz_article_uploads:/app/public/uploads
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -52,6 +54,8 @@ services:
 volumes:
   almumayiz_pgdata:
     name: almumayiz_pgdata
+  almumayiz_article_uploads:
+    name: almumayiz_article_uploads
 
 networks:
   caddy_net:

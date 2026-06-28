@@ -45,3 +45,31 @@ model SubmissionRateLimit {
 
   @@index([expiresAt])
 }
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Article {
+  id             Int           @id @default(autoincrement())
+  locale         String        @default("fr")
+  slug           String
+  title          String
+  excerpt        String
+  content        String
+  coverImage     String?
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  canonicalUrl   String?
+  author         String        @default("AL MUMAYIZ")
+  status         ArticleStatus @default(DRAFT)
+  publishedAt    DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@unique([locale, slug])
+  @@index([status, publishedAt])
+  @@index([locale, status, publishedAt])
+}

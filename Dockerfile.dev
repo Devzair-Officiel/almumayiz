@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci --ignore-scripts
 COPY . .
-RUN mkdir -p /app/.next \
+RUN mkdir -p /app/.next /app/public/uploads/articles \
     && chown -R node:node /app
 USER node
 EXPOSE 3000

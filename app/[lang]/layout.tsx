@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
 import "../globals.css";
+import "../blog-cms.css";
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));

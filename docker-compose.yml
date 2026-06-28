@@ -11,6 +11,7 @@ services:
       - .:/app
       - /app/node_modules
       - /app/.next
+      - almumayiz_article_uploads_dev:/app/public/uploads
     environment:
       - WATCHPACK_POLLING=true
     env_file:
@@ -40,3 +41,5 @@ services:
 volumes:
   almumayiz_pgdata_dev:
     name: almumayiz_pgdata_dev
+  almumayiz_article_uploads_dev:
+    name: almumayiz_article_uploads_dev
