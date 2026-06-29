@@ -1,50 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { QuoteForm } from "@/components/quote-form";
-import { getDictionary, isLocale, locales, type Dictionary, type Locale } from "@/lib/i18n";
+import { SiteFooter, SiteHeader } from "@/components/site-shell";
+import { getDictionary, isLocale, type Dictionary, type Locale } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
 
 const WHATSAPP_URL = process.env.WHATSAPP_URL ?? "https://wa.me/33761305011";
 const WHATSAPP_DISPLAY = "+33 7 61 30 50 11";
-
-function LanguageLinks({ locale }: { locale: Locale }) {
-  return (
-    <div className="languages" aria-label="Language">
-      {locales.map((item) => (
-        <Link key={item} href={`/${item}`} className={item === locale ? "active" : ""} hrefLang={item}>
-          {item.toUpperCase()}
-        </Link>
-      ))}
-    </div>
-  );
-}
-
-function Header({ locale, copy }: { locale: Locale; copy: Dictionary }) {
-  const links = [
-    ["products", copy.nav.products], ["factory", copy.nav.factory], ["why", copy.nav.why], ["process", copy.nav.process], ["faq", copy.nav.faq],
-  ];
-  return (
-    <>
-      <div className="topbar"><span>{copy.topbar}</span><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp ↗</a></div>
-      <header className="site-header">
-        <Link href={`/${locale}`} aria-label="AL MUMAYIZ" className="brand-link">
-          <Image src="/images/brand/wordmark.png" width={661} height={134} alt="AL MUMAYIZ" loading="eager" />
-        </Link>
-        <nav className="desktop-nav" aria-label="Navigation principale">
-          {links.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
-          <Link href={`/${locale}/blog`}>{copy.nav.blog}</Link>
-        </nav>
-        <div className="header-actions"><LanguageLinks locale={locale} /><a className="button button-dark header-quote" href="#contact">{copy.nav.quote}</a></div>
-        <details className="mobile-menu">
-          <summary aria-label="Menu"><span /><span /><span /></summary>
-          <nav>{links.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}<Link href={`/${locale}/blog`}>{copy.nav.blog}</Link><LanguageLinks locale={locale} /><a className="button button-dark" href="#contact">{copy.nav.quote}</a></nav>
-        </details>
-      </header>
-    </>
-  );
-}
 
 function Hero({ copy }: { copy: Dictionary }) {
   return (
@@ -130,15 +93,9 @@ function Faq({ copy }: { copy: Dictionary }) {
   );
 }
 
-function Footer({ locale, copy }: { locale: Locale; copy: Dictionary }) {
-  return (
-    <footer><div className="page-shell footer-main"><div><Image src="/images/brand/wordmark-cream.png" width={661} height={134} alt="AL MUMAYIZ" /><p>{copy.footer.tagline}</p><a className="footer-whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp · <bdi>{WHATSAPP_DISPLAY}</bdi></a></div><div><a href="#products">{copy.nav.products}</a><a href="#factory">{copy.nav.factory}</a><Link href={`/${locale}/blog`}>{copy.nav.blog}</Link><a href="#contact">{copy.nav.quote}</a><Link href={`/${locale}/mentions-legales`}>{copy.footer.legal}</Link><Link href={`/${locale}/confidentialite`}>{copy.footer.privacy}</Link></div><LanguageLinks locale={locale} /></div><div className="page-shell footer-bottom"><span>© {new Date().getFullYear()} AL MUMAYIZ. {copy.footer.rights}</span><a href="https://devzair.com" target="_blank" rel="noreferrer">devzair</a></div></footer>
-  );
-}
-
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const copy = await getDictionary(lang);
-  return <><Header locale={lang} copy={copy} /><main><Hero copy={copy} /><section className="markets"><div className="page-shell"><p>{copy.markets.title}</p><div>{copy.markets.items.map((market) => <span key={market}>{market}</span>)}</div></div></section><Products copy={copy} /><Why copy={copy} /><Factory copy={copy} /><Process copy={copy} /><section className="seo-block"><div className="page-shell"><h2>{copy.seo.title}</h2><p>{copy.seo.body}</p></div></section><Contact locale={lang} copy={copy} /><Faq copy={copy} /></main><Footer locale={lang} copy={copy} /></>;
+  return <><SiteHeader locale={lang} copy={copy} /><main><Hero copy={copy} /><section className="markets"><div className="page-shell"><p>{copy.markets.title}</p><div>{copy.markets.items.map((market) => <span key={market}>{market}</span>)}</div></div></section><Products copy={copy} /><Why copy={copy} /><Factory copy={copy} /><Process copy={copy} /><section className="seo-block"><div className="page-shell"><h2>{copy.seo.title}</h2><p>{copy.seo.body}</p></div></section><Contact locale={lang} copy={copy} /><Faq copy={copy} /></main><SiteFooter locale={lang} copy={copy} /></>;
 }

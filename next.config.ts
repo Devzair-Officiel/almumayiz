@@ -20,6 +20,11 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "*": ["./app/generated/prisma/**/*"],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb",
+    },
+  },
   async headers() {
     return [{
       source: "/:path*",

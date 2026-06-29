@@ -11,7 +11,7 @@ export type Dictionary = {
   localeName: string;
   direction: "ltr" | "rtl";
   metadata: { title: string; description: string };
-  nav: { products: string; factory: string; why: string; process: string; faq: string; blog: string; quote: string };
+  nav: { products: string; factory: string; why: string; process: string; faq: string; blog: string; quote: string; about: string };
   topbar: string;
   hero: { eyebrow: string; before: string; accent: string; after: string; body: string; quote: string; whatsapp: string };
   stats: Array<{ value: string; label: string }>;
@@ -35,6 +35,13 @@ export type Dictionary = {
   };
   faq: { title: string; items: Array<{ question: string; answer: string }> };
   footer: { tagline: string; rights: string; legal: string; privacy: string };
+  about: {
+    eyebrow: string; title: string; sub: string;
+    storyEyebrow: string; storyTitle: string; storyP1: string; storyP2: string;
+    mission: string;
+    valuesEyebrow: string; valuesTitle: string; values: Array<{ title: string; body: string }>;
+    ctaTitle: string; ctaSub: string;
+  };
 };
 
 const sharedImages = [
@@ -50,7 +57,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       title: "Chéchia en gros | Fabricant AL MUMAYIZ",
       description: "Fabricant et grossiste de chéchias pour homme en Égypte. Prix d’usine, personnalisation OEM et export international.",
     },
-    nav: { products: "Produits", factory: "Notre usine", why: "Pourquoi nous", process: "Processus", faq: "FAQ", blog: "Blog", quote: "Demander un devis" },
+    nav: { products: "Produits", factory: "Notre usine", why: "Pourquoi nous", process: "Processus", faq: "FAQ", blog: "Blog", quote: "Demander un devis", about: "À propos" },
     topbar: "Commande minimum 100 pièces · Production en usine — Égypte",
     hero: {
       eyebrow: "Grossiste & fabricant de chéchias", before: "La chéchia ", accent: "en gros", after: ", directement de notre usine.",
@@ -105,11 +112,26 @@ const dictionaries: Record<Locale, Dictionary> = {
       { question: "Puis-je recevoir un échantillon ?", answer: "Oui, un échantillon peut être préparé afin de valider la qualité avant commande." },
     ] },
     footer: { tagline: "Fabricant & grossiste de chéchias, basé en Égypte.", rights: "Tous droits réservés.", legal: "Mentions légales", privacy: "Confidentialité" },
+    about: {
+      eyebrow: "À propos d’AL MUMAYIZ", title: "Le spécialiste de la chéchia en gros",
+      sub: "AL MUMAYIZ est un fabricant et grossiste de chéchias pour homme, basé en Égypte. Nous fournissons grossistes, détaillants et distributeurs partout dans le monde, directement depuis notre usine.",
+      storyEyebrow: "Notre histoire", storyTitle: "Du fil à la chéchia, sous un même toit",
+      storyP1: "Spécialisés dans la chéchia depuis nos débuts, nous avons bâti une usine intégrée en Égypte qui maîtrise chaque étape : tricotage, broderie, contrôle qualité et conditionnement.",
+      storyP2: "Cette maîtrise complète nous permet d’offrir des prix d’usine, une qualité constante et une capacité de production adaptée aux commandes en gros, du premier carton jusqu’au conteneur.",
+      mission: "Offrir aux professionnels une chéchia de qualité, en grande quantité et à prix juste, directement du fabricant.",
+      valuesEyebrow: "Nos valeurs", valuesTitle: "Ce qui nous guide",
+      values: [
+        { title: "Qualité", body: "Un coton sélectionné et un contrôle à chaque étape pour une finition irréprochable sur chaque pièce." },
+        { title: "Capacité", body: "Une usine intégrée, dimensionnée pour les commandes en gros et le respect de vos délais." },
+        { title: "Confiance", body: "Un partenaire B2B fiable, transparent et engagé sur le long terme." },
+      ],
+      ctaTitle: "Travaillons ensemble", ctaSub: "Vous cherchez un fournisseur fiable de chéchia en gros ? Parlons de votre projet et recevez votre devis.",
+    },
   },
   en: {
     localeName: "English", direction: "ltr",
     metadata: { title: "Wholesale Chechia | AL MUMAYIZ Manufacturer", description: "Men’s chechia manufacturer and wholesaler in Egypt. Factory prices, OEM customization and worldwide export." },
-    nav: { products: "Products", factory: "Our factory", why: "Why us", process: "Process", faq: "FAQ", blog: "Blog", quote: "Request a quote" },
+    nav: { products: "Products", factory: "Our factory", why: "Why us", process: "Process", faq: "FAQ", blog: "Blog", quote: "Request a quote", about: "About" },
     topbar: "Minimum order 100 pieces · Factory production — Egypt",
     hero: { eyebrow: "Chechia wholesaler & manufacturer", before: "Wholesale ", accent: "chechia", after: ", straight from our factory.", body: "AL MUMAYIZ manufactures and exports men’s chechia caps in large quantities from Egypt. Craft quality, high capacity and factory prices for professionals.", quote: "Request a wholesale quote", whatsapp: "Chat on WhatsApp" },
     stats: [{ value: "20K+", label: "pieces / month" }, { value: "100", label: "minimum order" }, { value: "10", label: "countries supplied" }],
@@ -137,11 +159,26 @@ const dictionaries: Record<Locale, Dictionary> = {
       { question: "What is the minimum order?", answer: "The minimum order is 100 pieces per style." }, { question: "Do you ship internationally?", answer: "Yes, we export worldwide with the required documentation." }, { question: "What are your production lead times?", answer: "Lead times depend on volume and customization and are confirmed with your quote." }, { question: "Can I receive a sample?", answer: "Yes, a sample can be prepared to approve quality before ordering." },
     ] },
     footer: { tagline: "Chechia manufacturer & wholesaler, based in Egypt.", rights: "All rights reserved.", legal: "Legal notice", privacy: "Privacy" },
+    about: {
+      eyebrow: "About AL MUMAYIZ", title: "The wholesale chechia specialist",
+      sub: "AL MUMAYIZ is a manufacturer and wholesaler of men’s chechia caps based in Egypt. We supply wholesalers, retailers and distributors worldwide, straight from our factory.",
+      storyEyebrow: "Our story", storyTitle: "From yarn to chechia, under one roof",
+      storyP1: "Specialised in chechia from the start, we built an integrated factory in Egypt that controls every step: knitting, embroidery, quality control and packaging.",
+      storyP2: "This full control lets us offer factory prices, consistent quality and a production capacity suited to wholesale orders, from the first carton to a full container.",
+      mission: "To give professionals a quality chechia, in large quantities and at a fair price, straight from the manufacturer.",
+      valuesEyebrow: "Our values", valuesTitle: "What drives us",
+      values: [
+        { title: "Quality", body: "Selected cotton and control at every stage for a flawless finish on every piece." },
+        { title: "Capacity", body: "An integrated factory sized for wholesale orders and for meeting your deadlines." },
+        { title: "Trust", body: "A reliable, transparent B2B partner committed for the long term." },
+      ],
+      ctaTitle: "Let's work together", ctaSub: "Looking for a reliable wholesale chechia supplier? Let's talk about your project and get your quote.",
+    },
   },
   ar: {
     localeName: "العربية", direction: "rtl",
     metadata: { title: "الشاشية بالجملة | مصنع المميز", description: "مصنع وتاجر جملة للشاشيات الرجالية في مصر، مع أسعار المصنع والتخصيص والتصدير إلى جميع أنحاء العالم." },
-    nav: { products: "المنتجات", factory: "مصنعنا", why: "لماذا نحن", process: "آلية العمل", faq: "الأسئلة الشائعة", blog: "المدونة", quote: "اطلب عرض سعر" },
+    nav: { products: "المنتجات", factory: "مصنعنا", why: "لماذا نحن", process: "آلية العمل", faq: "الأسئلة الشائعة", blog: "المدونة", quote: "اطلب عرض سعر", about: "من نحن" },
     topbar: "الحد الأدنى للطلب 100 قطعة · إنتاج مصنعي — مصر",
     hero: { eyebrow: "مصنع وتاجر جملة للشاشيات", before: "الشاشية ", accent: "بالجملة", after: "، مباشرة من مصنعنا.", body: "تصنّع المميز وتصدّر الشاشيات الرجالية بكميات كبيرة من مصر، بجودة حرفية وطاقة إنتاجية عالية وأسعار مصنع للمحترفين.", quote: "اطلب عرض سعر بالجملة", whatsapp: "تواصل عبر واتساب" },
     stats: [{ value: "+20 ألف", label: "قطعة / شهرياً" }, { value: "100", label: "حد أدنى للطلب" }, { value: "10", label: "دول للتصدير" }],
@@ -162,6 +199,21 @@ const dictionaries: Record<Locale, Dictionary> = {
       { question: "ما الحد الأدنى للطلب؟", answer: "الحد الأدنى هو 100 قطعة لكل موديل." }, { question: "هل تشحنون دولياً؟", answer: "نعم، نصدر إلى جميع أنحاء العالم مع المستندات المطلوبة." }, { question: "ما مدة الإنتاج؟", answer: "تعتمد على الكمية والتخصيص ويتم تأكيدها مع عرض السعر." }, { question: "هل يمكنني الحصول على عينة؟", answer: "نعم، يمكن إعداد عينة لاعتماد الجودة قبل الطلب." },
     ] },
     footer: { tagline: "مصنع وتاجر جملة للشاشيات، مقرنا في مصر.", rights: "جميع الحقوق محفوظة.", legal: "الإشعار القانوني", privacy: "الخصوصية" },
+    about: {
+      eyebrow: "عن AL MUMAYIZ", title: "المتخصص في الشاشية بالجملة",
+      sub: "المميز مصنّع وتاجر جملة للشاشيات الرجالية، مقرنا في مصر. نزوّد تجار الجملة والتجزئة والموزعين حول العالم، مباشرة من مصنعنا.",
+      storyEyebrow: "قصتنا", storyTitle: "من الخيط إلى الشاشية، تحت سقف واحد",
+      storyP1: "متخصصون في الشاشية منذ البداية، أنشأنا مصنعاً متكاملاً في مصر يتحكم في كل مرحلة: الحياكة والتطريز ومراقبة الجودة والتغليف.",
+      storyP2: "هذا التحكم الكامل يتيح لنا تقديم أسعار المصنع وجودة ثابتة وطاقة إنتاجية تناسب طلبات الجملة، من أول كرتونة حتى الحاوية الكاملة.",
+      mission: "أن نقدّم للمحترفين شاشية عالية الجودة، بكميات كبيرة وسعر عادل، مباشرة من المصنّع.",
+      valuesEyebrow: "قيمنا", valuesTitle: "ما يقودنا",
+      values: [
+        { title: "الجودة", body: "قطن منتقى ورقابة في كل مرحلة لتشطيب لا تشوبه شائبة في كل قطعة." },
+        { title: "الطاقة", body: "مصنع متكامل مصمم لطلبات الجملة والالتزام بمواعيدك." },
+        { title: "الثقة", body: "شريك B2B موثوق وشفاف ومُلتزم على المدى الطويل." },
+      ],
+      ctaTitle: "لنعمل معاً", ctaSub: "تبحث عن مورد موثوق للشاشية بالجملة؟ لنتحدث عن مشروعك وتحصل على عرض سعرك.",
+    },
   },
 };
 

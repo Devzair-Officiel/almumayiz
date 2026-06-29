@@ -24,11 +24,11 @@ export async function saveArticleImage(file: File) {
     .webp({ quality: 84, effort: 5 })
     .toFile(path.join(directory, filename));
 
-  return `/uploads/articles/${filename}`;
+  return `/media/articles/${filename}`;
 }
 
 export async function removeArticleImage(publicPath: string | null | undefined) {
-  if (!publicPath?.startsWith("/uploads/articles/")) return;
+  if (!publicPath?.startsWith("/media/articles/")) return;
   const filename = path.basename(publicPath);
   try { await unlink(path.join(uploadDirectory(), filename)); } catch { /* Already absent. */ }
 }

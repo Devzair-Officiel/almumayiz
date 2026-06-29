@@ -27,7 +27,11 @@ export function ArticleEditor({ action, article }: { action: ArticleAction; arti
 
   const formatContent = (before: string, after = before, fallback = "texte") => {
     const textarea = contentRef.current;
-    if (!textarea) return;
+    if (!textarea) {
+      setEditorMode("write");
+      setContent((prev) => `${prev}${prev && !prev.endsWith("\n") ? "\n\n" : ""}${before}${fallback}${after}`);
+      return;
+    }
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selected = content.slice(start, end) || fallback;
@@ -44,6 +48,25 @@ export function ArticleEditor({ action, article }: { action: ArticleAction; arti
     if (url) formatContent("[", `](${url})`, "texte du lien");
   };
 
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const insertImage = async (file: File) => {
+    setUploadingImage(true);
+    try {
+      const body = new FormData();
+      body.set("file", file);
+      const response = await fetch("/admin/upload-image", { method: "POST", body });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error ?? "Échec de l’envoi de l’image");
+      formatContent(`![`, `](${result.url})`, "description de l’image");
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Échec de l’envoi de l’image");
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   return <form action={formAction} className="article-editor">
     <div className="admin-form-grid">
       <label><span>Langue</span><select name="locale" defaultValue={article?.locale ?? "fr"}><option value="fr">Français</option><option value="en">English</option><option value="ar">العربية</option></select></label>
@@ -53,7 +76,8 @@ export function ArticleEditor({ action, article }: { action: ArticleAction; arti
     <label><span>Slug URL</span><div className="slug-input"><code>/blog/</code><input name="slug" value={slug} onChange={(event) => { setSlugEdited(true); setSlug(slugify(event.target.value)); }} pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /></div></label>
     <label><span>Résumé</span><textarea name="excerpt" rows={3} defaultValue={article?.excerpt} minLength={20} maxLength={320} placeholder="Une introduction claire qui donnera envie de lire l’article…" required /><small>Ce texte apparaît dans la liste des articles et les résultats de recherche.</small></label>
     <div className="content-editor-field"><div className="content-editor-label"><div><strong>Contenu de l’article</strong><span>Markdown assisté</span></div><div className="editor-tabs"><button type="button" className={editorMode === "write" ? "active" : ""} onClick={() => setEditorMode("write")}>Écrire</button><button type="button" className={editorMode === "preview" ? "active" : ""} onClick={() => setEditorMode("preview")}>Aperçu</button></div></div>
-      <div className="markdown-toolbar" aria-label="Mise en forme"><button type="button" onClick={() => formatContent("## ", "", "Titre de section")} title="Titre 2">H2</button><button type="button" onClick={() => formatContent("### ", "", "Sous-titre")} title="Titre 3">H3</button><span /><button type="button" onClick={() => formatContent("**", "**")} title="Gras"><strong>B</strong></button><button type="button" onClick={() => formatContent("*", "*")} title="Italique"><em>I</em></button><button type="button" onClick={addLink} title="Ajouter un lien">↗ Lien</button><span /><button type="button" onClick={() => formatContent("- ", "", "Élément de liste")} title="Liste">☷ Liste</button><button type="button" onClick={() => formatContent("> ", "", "Citation")} title="Citation">❝ Citation</button><button type="button" onClick={() => formatContent("\n---\n", "", "")} title="Séparateur">—</button></div>
+      <div className="markdown-toolbar" aria-label="Mise en forme"><button type="button" onClick={() => formatContent("## ", "", "Titre de section")} title="Titre 2">H2</button><button type="button" onClick={() => formatContent("### ", "", "Sous-titre")} title="Titre 3">H3</button><span /><button type="button" onClick={() => formatContent("**", "**")} title="Gras"><strong>B</strong></button><button type="button" onClick={() => formatContent("*", "*")} title="Italique"><em>I</em></button><button type="button" onClick={addLink} title="Ajouter un lien">↗ Lien</button><button type="button" onClick={() => imageInputRef.current?.click()} disabled={uploadingImage} title="Insérer une image">🖼 {uploadingImage ? "Envoi…" : "Image"}</button><span /><button type="button" onClick={() => formatContent("- ", "", "Élément de liste")} title="Liste">☷ Liste</button><button type="button" onClick={() => formatContent("> ", "", "Citation")} title="Citation">❝ Citation</button><button type="button" onClick={() => formatContent("\n---\n", "", "")} title="Séparateur">—</button></div>
+      <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={(event) => { const file = event.target.files?.[0]; event.target.value = ""; if (file) insertImage(file); }} />
       {editorMode === "write" ? <textarea ref={contentRef} name="content" className="markdown-editor" rows={24} value={content} onChange={(event) => setContent(event.target.value)} minLength={50} placeholder="Commencez à rédiger votre article ici…" required /> : <><input type="hidden" name="content" value={content} /><article className="markdown-preview">{content ? <ReactMarkdown>{content}</ReactMarkdown> : <p className="preview-placeholder">L’aperçu de votre article apparaîtra ici.</p>}</article></>}
       <div className="editor-help"><span>{content.trim().split(/\s+/).filter(Boolean).length} mots</span><span>Utilisez la barre d’outils pour mettre votre texte en forme.</span></div>
     </div>
