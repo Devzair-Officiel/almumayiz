@@ -1,7 +1,5 @@
 import { CookieBanner } from "@/components/cookie-banner";
 import "../globals.css";
-import "../blog-cms.css";
-import "../about.css";
 
 export default function FrenchRootLayout({ children }: { children: React.ReactNode }) {
   return (

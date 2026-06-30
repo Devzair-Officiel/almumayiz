@@ -23,7 +23,7 @@ export function SiteHeader({ locale, copy }: { locale: Locale; copy: Dictionary 
       <div className="topbar"><span>{copy.topbar}</span><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp ↗</a></div>
       <header className="site-header">
         <Link href={`/${locale}`} aria-label="AL MUMAYIZ" className="brand-link">
-          <Image src="/images/brand/wordmark.webp" width={661} height={134} alt="AL MUMAYIZ" loading="eager" />
+          <Image src="/images/brand/wordmark.webp" width={661} height={134} alt="AL MUMAYIZ" priority sizes="(max-width: 780px) 145px, 176px" />
         </Link>
         <nav className="desktop-nav" aria-label="Navigation principale">
           <Link href={`/${locale}`}>{locale === "ar" ? "الرئيسية" : locale === "en" ? "Home" : "Accueil"}</Link>

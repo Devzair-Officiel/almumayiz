@@ -1,10 +1,10 @@
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
-import { QuoteForm } from "@/components/quote-form";
 import { SiteFooter, SiteHeader, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/components/site-shell";
-import { getDictionary, isLocale, type Dictionary, type Locale } from "@/lib/i18n";
 
-export const dynamic = "force-dynamic";
+const QuoteForm = dynamic(() => import("@/components/quote-form").then((m) => ({ default: m.QuoteForm })));
+import { getDictionary, isLocale, type Dictionary, type Locale } from "@/lib/i18n";
 
 function Hero({ copy }: { copy: Dictionary }) {
   return (
@@ -21,7 +21,7 @@ function Hero({ copy }: { copy: Dictionary }) {
         </div>
         <div className="hero-art" aria-hidden="true">
           <span className="hero-orbit orbit-one" /><span className="hero-orbit orbit-two" />
-          <Image src="/images/brand/logo-full.webp" width={680} height={412} alt="" priority={true} />
+          <Image src="/images/brand/logo-full.webp" width={680} height={412} alt="" priority={true} sizes="(max-width: 780px) 90vw, 460px" />
           <span className="made-tag">MADE IN<br /><strong>EGYPT</strong></span>
         </div>
       </div>
@@ -38,7 +38,7 @@ function Products({ copy }: { copy: Dictionary }) {
         {copy.products.items.map((product, index) => (
           <article className="product-card" key={product.name}>
             <span className="product-number">0{index + 1}</span>
-            <div className="product-image"><Image src={product.image} width={300} height={320} alt={product.name} loading={index === 0 ? "eager" : "lazy"} /></div>
+            <div className="product-image"><Image src={product.image} width={300} height={320} alt={product.name} loading={index === 0 ? "eager" : "lazy"} sizes="(max-width: 780px) 100vw, (max-width: 1180px) 33vw, 380px" /></div>
             <h3>{product.name}</h3><p>{product.description}</p>
           </article>
         ))}
