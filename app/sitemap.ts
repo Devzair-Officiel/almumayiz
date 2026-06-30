@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       { url: `${baseUrl}/${locale}/confidentialite`, lastModified: now, changeFrequency: "yearly" as const, priority: 0.2 },
     ]),
     { url: `${baseUrl}/fr/grossiste-chechia`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.7 },
+    { url: `${baseUrl}/fr/fabricant-chechia`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.7 },
   ];
   const articles = await prisma.article.findMany({ where: { status: "PUBLISHED", publishedAt: { lte: new Date() } }, select: { locale: true, slug: true, updatedAt: true } });
   return [...staticRoutes, ...articles.map((article) => ({ url: `${baseUrl}/${article.locale}/blog/${article.slug}`, lastModified: article.updatedAt, changeFrequency: "monthly" as const, priority: 0.7 }))];

@@ -29,12 +29,13 @@ export function SiteHeader({ locale, copy }: { locale: Locale; copy: Dictionary 
           <Link href={`/${locale}`}>{locale === "ar" ? "الرئيسية" : locale === "en" ? "Home" : "Accueil"}</Link>
           <Link href={`/${locale}/a-propos`}>{copy.nav.about}</Link>
           {locale === "fr" && <Link href="/fr/grossiste-chechia">Grossiste chéchia</Link>}
+          {locale === "fr" && <Link href="/fr/fabricant-chechia">Fabricant chéchia</Link>}
           <Link href={`/${locale}/blog`}>{copy.nav.blog}</Link>
         </nav>
         <div className="header-actions"><LanguageLinks locale={locale} /><a className="button button-dark header-quote" href={`/${locale}#contact`}>{copy.nav.quote}</a></div>
         <details className="mobile-menu">
           <summary aria-label="Menu"><span /><span /><span /></summary>
-          <nav><Link href={`/${locale}`}>{locale === "ar" ? "الرئيسية" : locale === "en" ? "Home" : "Accueil"}</Link><Link href={`/${locale}/a-propos`}>{copy.nav.about}</Link>{locale === "fr" && <Link href="/fr/grossiste-chechia">Grossiste chéchia</Link>}<Link href={`/${locale}/blog`}>{copy.nav.blog}</Link><LanguageLinks locale={locale} /><a className="button button-dark" href={`/${locale}#contact`}>{copy.nav.quote}</a></nav>
+          <nav><Link href={`/${locale}`}>{locale === "ar" ? "الرئيسية" : locale === "en" ? "Home" : "Accueil"}</Link><Link href={`/${locale}/a-propos`}>{copy.nav.about}</Link>{locale === "fr" && <Link href="/fr/grossiste-chechia">Grossiste chéchia</Link>}{locale === "fr" && <Link href="/fr/fabricant-chechia">Fabricant chéchia</Link>}<Link href={`/${locale}/blog`}>{copy.nav.blog}</Link><LanguageLinks locale={locale} /><a className="button button-dark" href={`/${locale}#contact`}>{copy.nav.quote}</a></nav>
         </details>
       </header>
     </>
@@ -60,6 +61,7 @@ export function SiteFooter({ locale, copy }: { locale: Locale; copy: Dictionary 
             <Link href={`/${locale}`}>{home}</Link>
             <Link href={`/${locale}/a-propos`}>{copy.nav.about}</Link>
             {locale === "fr" && <Link href="/fr/grossiste-chechia">Grossiste chéchia</Link>}
+            {locale === "fr" && <Link href="/fr/fabricant-chechia">Fabricant chéchia</Link>}
             <Link href={`/${locale}/blog`}>{copy.nav.blog}</Link>
           </div>
         </div>
