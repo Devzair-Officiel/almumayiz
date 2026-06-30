@@ -154,9 +154,9 @@ export default async function GrossisteChechiaPage() {
             <div className="split-hero-art">
               <span className="ring" />
               <div className="caps">
-                <Image src="/images/products/beige.png" width={108} height={108} alt="Chéchia beige en gros" />
-                <Image src="/images/products/olive.png" width={152} height={152} alt="Chéchia homme olive en gros" />
-                <Image src="/images/products/black.png" width={108} height={108} alt="Chéchia noire en gros" />
+                <Image src="/images/products/beige.webp" width={108} height={108} alt="Chéchia beige en gros" />
+                <Image src="/images/products/olive.webp" width={152} height={152} alt="Chéchia homme olive en gros" />
+                <Image src="/images/products/black.webp" width={108} height={108} alt="Chéchia noire en gros" />
               </div>
               <span className="made-badge">✓ Made in Egypt</span>
             </div>

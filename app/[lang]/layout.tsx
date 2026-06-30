@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     description: metadata.description,
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001"),
     alternates: { canonical: `/${lang}`, languages: { fr: "/fr", en: "/en", ar: "/ar" } },
-    openGraph: { title: metadata.title, description: metadata.description, type: "website", images: ["/images/brand/logo-full.png"] },
+    openGraph: { title: metadata.title, description: metadata.description, type: "website", images: ["/images/brand/og-default.jpg"] },
   };
 }
 

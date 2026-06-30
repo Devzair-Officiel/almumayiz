@@ -45,9 +45,9 @@ export type Dictionary = {
 };
 
 const sharedImages = [
-  "/images/products/beige.png",
-  "/images/products/olive.png",
-  "/images/products/black.png",
+  "/images/products/beige.webp",
+  "/images/products/olive.webp",
+  "/images/products/black.webp",
 ];
 
 const dictionaries: Record<Locale, Dictionary> = {

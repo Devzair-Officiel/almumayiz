@@ -17,7 +17,7 @@ export default async function AdminLoginPage() {
     </section>
     <section className="admin-login-panel">
       <div className="admin-login-card">
-        <Image src="/images/brand/wordmark.png" width={661} height={134} alt="AL MUMAYIZ" loading="eager" />
+        <Image src="/images/brand/wordmark.webp" width={661} height={134} alt="AL MUMAYIZ" loading="eager" />
         <div className="admin-login-heading"><p>Administration du blog</p><h2>Heureux de vous revoir</h2><span>Connectez-vous pour accéder à votre espace.</span></div>
         <AdminLoginForm />
         <p className="admin-login-security"><span aria-hidden="true">◇</span> Accès privé et sécurisé</p>

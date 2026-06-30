@@ -23,7 +23,7 @@ export function SiteHeader({ locale, copy }: { locale: Locale; copy: Dictionary 
       <div className="topbar"><span>{copy.topbar}</span><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp ↗</a></div>
       <header className="site-header">
         <Link href={`/${locale}`} aria-label="AL MUMAYIZ" className="brand-link">
-          <Image src="/images/brand/wordmark.png" width={661} height={134} alt="AL MUMAYIZ" loading="eager" />
+          <Image src="/images/brand/wordmark.webp" width={661} height={134} alt="AL MUMAYIZ" loading="eager" />
         </Link>
         <nav className="desktop-nav" aria-label="Navigation principale">
           <Link href={`/${locale}`}>{locale === "ar" ? "الرئيسية" : locale === "en" ? "Home" : "Accueil"}</Link>
@@ -50,7 +50,7 @@ export function SiteFooter({ locale, copy }: { locale: Locale; copy: Dictionary 
     <footer>
       <div className="page-shell footer-main">
         <div>
-          <Image src="/images/brand/wordmark-cream.png" width={661} height={134} alt="AL MUMAYIZ" />
+          <Image src="/images/brand/wordmark-cream.webp" width={661} height={134} alt="AL MUMAYIZ" />
           <p>{copy.footer.tagline}</p>
           <div className="footer-made-badge">★ Made in Egypt</div>
         </div>

@@ -5,7 +5,7 @@ import type { Locale } from "@/lib/i18n";
 
 export function BlogHeader({ locale }: { locale: Locale }) {
   const t = blogCopy[locale];
-  return <header className="blog-header page-shell"><Link href={`/${locale}`} className="blog-logo"><Image src="/images/brand/wordmark.png" width={661} height={134} alt="AL MUMAYIZ" loading="eager" /></Link><nav><Link href={`/${locale}`}>{t.home}</Link><Link href={`/${locale}/blog`}>{t.blog}</Link><Link className="button button-dark" href={`/${locale}#contact`}>{t.contact}</Link></nav></header>;
+  return <header className="blog-header page-shell"><Link href={`/${locale}`} className="blog-logo"><Image src="/images/brand/wordmark.webp" width={661} height={134} alt="AL MUMAYIZ" loading="eager" /></Link><nav><Link href={`/${locale}`}>{t.home}</Link><Link href={`/${locale}/blog`}>{t.blog}</Link><Link className="button button-dark" href={`/${locale}#contact`}>{t.contact}</Link></nav></header>;
 }
 
 export function BlogFooter({ locale }: { locale: Locale }) {

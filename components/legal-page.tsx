@@ -7,7 +7,7 @@ export function LegalPage({ locale, title, updated, children }: { locale: Locale
     <>
       <header className="legal-header page-shell">
         <Link href={`/${locale}`} aria-label="AL MUMAYIZ">
-          <Image src="/images/brand/wordmark.png" width={661} height={134} alt="AL MUMAYIZ" loading="eager" />
+          <Image src="/images/brand/wordmark.webp" width={661} height={134} alt="AL MUMAYIZ" loading="eager" />
         </Link>
         <Link href={`/${locale}`}>← {locale === "ar" ? "العودة إلى الموقع" : locale === "en" ? "Back to website" : "Retour au site"}</Link>
       </header>

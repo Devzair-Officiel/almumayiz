@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       description: t.intro,
       type: "website",
       url: `${SITE_URL}/${lang}/blog`,
-      images: [{ url: `${SITE_URL}/images/brand/logo-full.png`, alt: "AL MUMAYIZ" }],
+      images: [{ url: `${SITE_URL}/images/brand/og-default.jpg`, alt: "AL MUMAYIZ" }],
     },
   };
 }
