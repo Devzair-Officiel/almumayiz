@@ -6,6 +6,7 @@ import { ArticleCard, BlogFooter, BlogHeader } from "@/components/blog-shell";
 import { getPublishedArticle, listPublishedArticles } from "@/lib/articles";
 import { blogCopy } from "@/lib/blog-copy";
 import { isLocale } from "@/lib/i18n";
+import { getSiteUrl } from "@/lib/site-url";
 import { markdownToHtml, readingTime } from "@/lib/markdown";
 
 export const dynamic = "force-dynamic";
@@ -41,7 +42,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       images: article.coverImage ? [article.coverImage] : undefined,
     },
-    robots: { index: true, follow: true },
   };
 }
 
@@ -56,7 +56,7 @@ export default async function ArticlePage({ params }: Props) {
     .filter((item) => item.id !== article.id)
     .slice(0, 3);
   const t = blogCopy[lang];
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
+  const baseUrl = getSiteUrl();
   const dateLocale = lang === "ar" ? "ar-EG" : lang;
 
   const jsonLd = {

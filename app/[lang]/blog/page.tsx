@@ -4,32 +4,33 @@ import { ArticleCard, BlogFooter, BlogHeader } from "@/components/blog-shell";
 import { listPublishedArticles } from "@/lib/articles";
 import { blogCopy } from "@/lib/blog-copy";
 import { isLocale } from "@/lib/i18n";
+import { getSiteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
+  const siteUrl = getSiteUrl();
   const t = blogCopy[lang];
   return {
     title: `${t.blog} | AL MUMAYIZ`,
     description: t.intro,
     alternates: {
-      canonical: `${SITE_URL}/${lang}/blog`,
+      canonical: `${siteUrl}/${lang}/blog`,
       languages: {
-        fr: `${SITE_URL}/fr/blog`,
-        en: `${SITE_URL}/en/blog`,
-        ar: `${SITE_URL}/ar/blog`,
+        fr: `${siteUrl}/fr/blog`,
+        en: `${siteUrl}/en/blog`,
+        ar: `${siteUrl}/ar/blog`,
+        "x-default": `${siteUrl}/fr/blog`,
       },
     },
     openGraph: {
       title: `${t.blog} | AL MUMAYIZ`,
       description: t.intro,
       type: "website",
-      url: `${SITE_URL}/${lang}/blog`,
-      images: [{ url: `${SITE_URL}/images/brand/og-default.jpg`, alt: "AL MUMAYIZ" }],
+      url: `${siteUrl}/${lang}/blog`,
+      images: [{ url: `${siteUrl}/images/brand/og-default.jpg`, alt: "AL MUMAYIZ" }],
     },
   };
 }

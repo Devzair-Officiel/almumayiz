@@ -3,8 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { SiteFooter, SiteHeader, WHATSAPP_URL } from "@/components/site-shell";
 import { getDictionary } from "@/lib/i18n";
+import { getSiteUrl } from "@/lib/site-url";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
+const SITE_URL = getSiteUrl();
 const PAGE_PATH = "/fr/fabricant-chechia";
 const TITLE = "Fabricant chéchia pour professionnels | AL MUMAYIZ";
 const DESCRIPTION =

@@ -4,32 +4,32 @@ import { notFound } from "next/navigation";
 import "../../about.css";
 import { SiteFooter, SiteHeader, WHATSAPP_URL } from "@/components/site-shell";
 import { getDictionary, isLocale } from "@/lib/i18n";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
+import { getSiteUrl } from "@/lib/site-url";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
+  const siteUrl = getSiteUrl();
   const copy = await getDictionary(lang);
   return {
     title: `${copy.about.title} | AL MUMAYIZ`,
     description: copy.about.sub,
     alternates: {
-      canonical: `${SITE_URL}/${lang}/a-propos`,
+      canonical: `${siteUrl}/${lang}/a-propos`,
       languages: {
-        fr: `${SITE_URL}/fr/a-propos`,
-        en: `${SITE_URL}/en/a-propos`,
-        ar: `${SITE_URL}/ar/a-propos`,
+        fr: `${siteUrl}/fr/a-propos`,
+        en: `${siteUrl}/en/a-propos`,
+        ar: `${siteUrl}/ar/a-propos`,
+        "x-default": `${siteUrl}/fr/a-propos`,
       },
     },
     openGraph: {
       title: `${copy.about.title} | AL MUMAYIZ`,
       description: copy.about.sub,
       type: "website",
-      url: `${SITE_URL}/${lang}/a-propos`,
-      images: [{ url: `${SITE_URL}/images/factory/usine-a-propos.webp`, alt: copy.about.title }],
+      url: `${siteUrl}/${lang}/a-propos`,
+      images: [{ url: `${siteUrl}/images/factory/usine-a-propos.webp`, alt: copy.about.title }],
     },
-    robots: { index: true, follow: true },
   };
 }
 

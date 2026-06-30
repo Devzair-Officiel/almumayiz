@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
-  return { title: copy[lang].title, robots: { index: true, follow: true } };
+  return { title: copy[lang].title, robots: { index: false, follow: false } };
 }
 
 const copy = {

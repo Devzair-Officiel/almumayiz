@@ -1,4 +1,5 @@
 import { isLocale } from "@/lib/i18n";
+import { getSiteUrl } from "@/lib/site-url";
 import { listPublishedArticles } from "@/lib/articles";
 import { blogCopy } from "@/lib/blog-copy";
 
@@ -8,7 +9,7 @@ const xml = (value: string) => value.replace(/[<>&'\"]/g, (character) => ({ "<":
 export async function GET(_request: Request, { params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLocale(lang)) return new Response("Not found", { status: 404 });
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
+  const baseUrl = getSiteUrl();
   const articles = await listPublishedArticles(lang);
   const items = articles.map((article) => `<item><title>${xml(article.title)}</title><link>${baseUrl}/${lang}/blog/${article.slug}</link><guid>${baseUrl}/${lang}/blog/${article.slug}</guid><description>${xml(article.excerpt)}</description><pubDate>${(article.publishedAt ?? article.createdAt).toUTCString()}</pubDate></item>`).join("");
   const feed = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>AL MUMAYIZ — ${xml(blogCopy[lang].blog)}</title><link>${baseUrl}/${lang}/blog</link><description>${xml(blogCopy[lang].intro)}</description><language>${lang}</language>${items}</channel></rss>`;

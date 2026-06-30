@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
+import { getSiteUrl } from "@/lib/site-url";
 import { CookieBanner } from "@/components/cookie-banner";
 import "../globals.css";
 
@@ -17,8 +18,8 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
   return {
     title: metadata.title,
     description: metadata.description,
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001"),
-    alternates: { canonical: `/${lang}`, languages: { fr: "/fr", en: "/en", ar: "/ar" } },
+    metadataBase: new URL(getSiteUrl()),
+    alternates: { canonical: `/${lang}`, languages: { fr: "/fr", en: "/en", ar: "/ar", "x-default": "/fr" } },
     openGraph: { title: metadata.title, description: metadata.description, type: "website", images: ["/images/brand/og-default.jpg"] },
   };
 }
