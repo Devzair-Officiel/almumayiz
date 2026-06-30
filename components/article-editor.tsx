@@ -1,7 +1,7 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
-import ReactMarkdown from "react-markdown";
+import { useActionState, useEffect, useRef, useState } from "react";
+import { markdownToHtml } from "@/lib/markdown-shared";
 import type { AdminFormState } from "@/app/admin/actions";
 
 type ArticleDraft = {
@@ -22,7 +22,17 @@ export function ArticleEditor({ action, article }: { action: ArticleAction; arti
   const [slugEdited, setSlugEdited] = useState(Boolean(article?.slug));
   const [content, setContent] = useState(article?.content ?? "");
   const [editorMode, setEditorMode] = useState<"write" | "preview">("write");
+  const [previewHtml, setPreviewHtml] = useState<string>("");
   const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (!content) { setPreviewHtml(""); return; }
+    let cancelled = false;
+    markdownToHtml(content).then((rendered) => {
+      if (!cancelled) setPreviewHtml(rendered);
+    });
+    return () => { cancelled = true; };
+  }, [content]);
   const date = article?.publishedAt ? new Date(article.publishedAt).toISOString().slice(0, 16) : "";
 
   const formatContent = (before: string, after = before, fallback = "texte") => {
@@ -78,7 +88,7 @@ export function ArticleEditor({ action, article }: { action: ArticleAction; arti
     <div className="content-editor-field"><div className="content-editor-label"><div><strong>Contenu de l’article</strong><span>Markdown assisté</span></div><div className="editor-tabs"><button type="button" className={editorMode === "write" ? "active" : ""} onClick={() => setEditorMode("write")}>Écrire</button><button type="button" className={editorMode === "preview" ? "active" : ""} onClick={() => setEditorMode("preview")}>Aperçu</button></div></div>
       <div className="markdown-toolbar" aria-label="Mise en forme"><button type="button" onClick={() => formatContent("## ", "", "Titre de section")} title="Titre 2">H2</button><button type="button" onClick={() => formatContent("### ", "", "Sous-titre")} title="Titre 3">H3</button><span /><button type="button" onClick={() => formatContent("**", "**")} title="Gras"><strong>B</strong></button><button type="button" onClick={() => formatContent("*", "*")} title="Italique"><em>I</em></button><button type="button" onClick={addLink} title="Ajouter un lien">↗ Lien</button><button type="button" onClick={() => imageInputRef.current?.click()} disabled={uploadingImage} title="Insérer une image">🖼 {uploadingImage ? "Envoi…" : "Image"}</button><span /><button type="button" onClick={() => formatContent("- ", "", "Élément de liste")} title="Liste">☷ Liste</button><button type="button" onClick={() => formatContent("> ", "", "Citation")} title="Citation">❝ Citation</button><button type="button" onClick={() => formatContent("\n---\n", "", "")} title="Séparateur">—</button></div>
       <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={(event) => { const file = event.target.files?.[0]; event.target.value = ""; if (file) insertImage(file); }} />
-      {editorMode === "write" ? <textarea ref={contentRef} name="content" className="markdown-editor" rows={24} value={content} onChange={(event) => setContent(event.target.value)} minLength={50} placeholder="Commencez à rédiger votre article ici…" required /> : <><input type="hidden" name="content" value={content} /><article className="markdown-preview">{content ? <ReactMarkdown>{content}</ReactMarkdown> : <p className="preview-placeholder">L’aperçu de votre article apparaîtra ici.</p>}</article></>}
+      {editorMode === "write" ? <textarea ref={contentRef} name="content" className="markdown-editor" rows={24} value={content} onChange={(event) => setContent(event.target.value)} minLength={50} placeholder="Commencez à rédiger votre article ici…" required /> : <><input type="hidden" name="content" value={content} />{content ? <article className="markdown-preview" dangerouslySetInnerHTML={{ __html: previewHtml }} /> : <article className="markdown-preview"><p className="preview-placeholder">L’aperçu de votre article apparaîtra ici.</p></article>}</>}
       <div className="editor-help"><span>{content.trim().split(/\s+/).filter(Boolean).length} mots</span><span>Utilisez la barre d’outils pour mettre votre texte en forme.</span></div>
     </div>
     <div className="admin-form-grid">
