@@ -17,6 +17,9 @@ COPY . .
 # mais prisma.config.ts exige que la variable existe pour ne pas planter.
 ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
 ENV NEXT_PUBLIC_SITE_URL=https://al-mumayiz.com
+# Sitekey Turnstile (publique) : injectée au build car la landing est statique.
+ARG TURNSTILE_SITE_KEY
+ENV TURNSTILE_SITE_KEY=$TURNSTILE_SITE_KEY
 RUN npx prisma generate
 RUN npm run build
 

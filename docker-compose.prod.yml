@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: runner
+      args:
+        TURNSTILE_SITE_KEY: ${TURNSTILE_SITE_KEY}
     image: almumayiz:latest
     container_name: almumayiz
     restart: unless-stopped
