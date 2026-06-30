@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
+import { CookieBanner } from "@/components/cookie-banner";
 import "../globals.css";
 import "../blog-cms.css";
 
@@ -29,7 +30,10 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const dictionary = await getDictionary(lang);
   return (
     <html lang={lang} dir={dictionary.direction}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <CookieBanner locale={lang} />
+      </body>
     </html>
   );
 }

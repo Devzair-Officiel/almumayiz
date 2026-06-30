@@ -4,8 +4,6 @@ import { isLocale } from "@/lib/i18n";
 import { getLegalDetails } from "@/lib/legal";
 import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
-
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};

@@ -7,11 +7,31 @@ import { isLocale } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
+
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const t = blogCopy[lang];
-  return { title: `${t.blog} | AL MUMAYIZ`, description: t.intro, alternates: { canonical: `/${lang}/blog` } };
+  return {
+    title: `${t.blog} | AL MUMAYIZ`,
+    description: t.intro,
+    alternates: {
+      canonical: `${SITE_URL}/${lang}/blog`,
+      languages: {
+        fr: `${SITE_URL}/fr/blog`,
+        en: `${SITE_URL}/en/blog`,
+        ar: `${SITE_URL}/ar/blog`,
+      },
+    },
+    openGraph: {
+      title: `${t.blog} | AL MUMAYIZ`,
+      description: t.intro,
+      type: "website",
+      url: `${SITE_URL}/${lang}/blog`,
+      images: [{ url: `${SITE_URL}/images/brand/logo-full.png`, alt: "AL MUMAYIZ" }],
+    },
+  };
 }
 
 export default async function BlogPage({ params }: { params: Promise<{ lang: string }> }) {

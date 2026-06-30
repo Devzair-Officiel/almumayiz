@@ -16,6 +16,7 @@ COPY . .
 # DATABASE_URL factice : `prisma generate` ne se CONNECTE pas à la base,
 # mais prisma.config.ts exige que la variable existe pour ne pas planter.
 ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
+ENV NEXT_PUBLIC_SITE_URL=https://al-mumayiz.com
 RUN npx prisma generate
 RUN npm run build
 

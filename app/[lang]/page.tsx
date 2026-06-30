@@ -24,7 +24,7 @@ function Hero({ copy }: { copy: Dictionary }) {
         </div>
         <div className="hero-art" aria-hidden="true">
           <span className="hero-orbit orbit-one" /><span className="hero-orbit orbit-two" />
-          <Image src="/images/brand/logo-full.png" width={680} height={412} alt="" preload />
+          <Image src="/images/brand/logo-full.png" width={680} height={412} alt="" priority={true} />
           <span className="made-tag">MADE IN<br /><strong>EGYPT</strong></span>
         </div>
       </div>
