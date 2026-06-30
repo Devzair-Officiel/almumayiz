@@ -1,13 +1,10 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { QuoteForm } from "@/components/quote-form";
-import { SiteFooter, SiteHeader } from "@/components/site-shell";
+import { SiteFooter, SiteHeader, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/components/site-shell";
 import { getDictionary, isLocale, type Dictionary, type Locale } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
-
-const WHATSAPP_URL = process.env.WHATSAPP_URL ?? "https://wa.me/33761305011";
-const WHATSAPP_DISPLAY = "+33 7 61 30 50 11";
 
 function Hero({ copy }: { copy: Dictionary }) {
   return (

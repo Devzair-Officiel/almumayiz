@@ -3,7 +3,7 @@ import Link from "next/link";
 import { locales, type Dictionary, type Locale } from "@/lib/i18n";
 
 export const WHATSAPP_URL = process.env.WHATSAPP_URL ?? "https://wa.me/33761305011";
-export const WHATSAPP_DISPLAY = "+33 7 61 30 50 11";
+export const WHATSAPP_DISPLAY = process.env.WHATSAPP_DISPLAY ?? "+33 7 61 30 50 11";
 
 export function LanguageLinks({ locale }: { locale: Locale }) {
   return (
