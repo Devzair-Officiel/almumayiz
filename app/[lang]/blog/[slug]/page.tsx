@@ -25,8 +25,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     keywords: article.seoKeywords?.split(",").map((keyword) => keyword.trim()).filter(Boolean),
     alternates: { canonical },
-    openGraph: { type: "article", title, description, url: canonical, publishedTime: article.publishedAt?.toISOString(), modifiedTime: article.updatedAt.toISOString(), authors: [article.author], images },
-    twitter: { card: article.coverImage ? "summary_large_image" : "summary", title, description, images: article.coverImage ? [article.coverImage] : undefined },
+    openGraph: {
+      type: "article",
+      title,
+      description,
+      url: canonical,
+      publishedTime: article.publishedAt?.toISOString(),
+      modifiedTime: article.updatedAt.toISOString(),
+      authors: [article.author],
+      images,
+    },
+    twitter: {
+      card: article.coverImage ? "summary_large_image" : "summary",
+      title,
+      description,
+      images: article.coverImage ? [article.coverImage] : undefined,
+    },
     robots: { index: true, follow: true },
   };
 }
@@ -36,10 +50,92 @@ export default async function ArticlePage({ params }: Props) {
   if (!isLocale(lang)) notFound();
   const article = await getPublishedArticle(lang, slug);
   if (!article) notFound();
+
   const html = await markdownToHtml(article.content);
-  const related = (await listPublishedArticles(lang)).filter((item) => item.id !== article.id).slice(0, 3);
+  const related = (await listPublishedArticles(lang))
+    .filter((item) => item.id !== article.id)
+    .slice(0, 3);
   const t = blogCopy[lang];
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
-  const jsonLd = { "@context": "https://schema.org", "@type": "Article", headline: article.title, description: article.excerpt, image: article.coverImage ? new URL(article.coverImage, baseUrl).toString() : undefined, datePublished: article.publishedAt?.toISOString(), dateModified: article.updatedAt.toISOString(), author: { "@type": "Organization", name: article.author }, publisher: { "@type": "Organization", name: "AL MUMAYIZ" }, mainEntityOfPage: new URL(`/${lang}/blog/${article.slug}`, baseUrl).toString() };
-  return <><BlogHeader locale={lang} /><main><article className="blog-article"><header className="article-hero page-shell"><Link href={`/${lang}/blog`}><span aria-hidden="true">←</span> {t.back}</Link><p className="eyebrow">AL MUMAYIZ · {t.blog}</p><h1>{article.title}</h1><p className="article-lead">{article.excerpt}</p><div className="article-meta"><span>{article.author}</span><time dateTime={article.publishedAt?.toISOString()}>{t.published} {article.publishedAt?.toLocaleDateString(lang === "ar" ? "ar-EG" : lang, { dateStyle: "long" })}</time><span>{readingTime(article.content)} {t.minutes}</span></div></header>{article.coverImage && <div className="article-cover page-shell"><Image src={article.coverImage} fill sizes="(max-width: 1200px) 100vw, 1180px" alt={article.title} priority={true} /></div>}<div className="article-prose page-shell" dangerouslySetInnerHTML={{ __html: html }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} /></article>{related.length > 0 && <section className="related-articles"><div className="page-shell"><header className="related-articles-header"><span>{t.blog}</span><h2>{t.related}</h2></header><div className="related-articles-grid">{related.map((item) => <ArticleCard key={item.id} article={item} locale={lang} />)}</div></div></section>}</main><BlogFooter locale={lang} /></>;
+  const dateLocale = lang === "ar" ? "ar-EG" : lang;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    image: article.coverImage ? new URL(article.coverImage, baseUrl).toString() : undefined,
+    datePublished: article.publishedAt?.toISOString(),
+    dateModified: article.updatedAt.toISOString(),
+    author: { "@type": "Organization", name: article.author },
+    publisher: { "@type": "Organization", name: "AL MUMAYIZ" },
+    mainEntityOfPage: new URL(`/${lang}/blog/${article.slug}`, baseUrl).toString(),
+  };
+
+  return (
+    <>
+      <BlogHeader locale={lang} />
+      <main>
+        <article className="blog-article">
+          <header className="article-hero page-shell">
+            <Link href={`/${lang}/blog`}>
+              <span aria-hidden="true">←</span> {t.back}
+            </Link>
+            <p className="eyebrow">AL MUMAYIZ · {t.blog}</p>
+            <h1>{article.title}</h1>
+            <p className="article-lead">{article.excerpt}</p>
+            <div className="article-meta">
+              <span>{article.author}</span>
+              <time dateTime={article.publishedAt?.toISOString()}>
+                {t.published}{" "}
+                {article.publishedAt?.toLocaleDateString(dateLocale, { dateStyle: "long" })}
+              </time>
+              <span>{readingTime(article.content)} {t.minutes}</span>
+            </div>
+          </header>
+
+          {article.coverImage && (
+            <div className="article-cover page-shell">
+              <Image
+                src={article.coverImage}
+                fill
+                sizes="(max-width: 1200px) 100vw, 1180px"
+                alt={article.title}
+                priority={true}
+              />
+            </div>
+          )}
+
+          <div
+            className="article-prose page-shell"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+            }}
+          />
+        </article>
+
+        {related.length > 0 && (
+          <section className="related-articles">
+            <div className="page-shell">
+              <header className="related-articles-header">
+                <span>{t.blog}</span>
+                <h2>{t.related}</h2>
+              </header>
+              <div className="related-articles-grid">
+                {related.map((item) => (
+                  <ArticleCard key={item.id} article={item} locale={lang} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+      </main>
+      <BlogFooter locale={lang} />
+    </>
+  );
 }

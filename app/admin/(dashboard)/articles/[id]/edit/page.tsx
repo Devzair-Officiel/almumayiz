@@ -8,5 +8,17 @@ export default async function EditArticlePage({ params }: { params: Promise<{ id
   if (!Number.isInteger(id)) notFound();
   const article = await prisma.article.findUnique({ where: { id } });
   if (!article) notFound();
-  return <><div className="admin-title-row admin-editor-title"><div><p className="admin-kicker">Éditeur</p><h1>Modifier l’article</h1><p>Les modifications seront visibles après enregistrement.</p></div></div><ArticleEditor action={updateArticleAction.bind(null, id)} article={article} /></>;
+
+  return (
+    <>
+      <div className="admin-title-row admin-editor-title">
+        <div>
+          <p className="admin-kicker">Éditeur</p>
+          <h1>Modifier l'article</h1>
+          <p>Les modifications seront visibles après enregistrement.</p>
+        </div>
+      </div>
+      <ArticleEditor action={updateArticleAction.bind(null, id)} article={article} />
+    </>
+  );
 }

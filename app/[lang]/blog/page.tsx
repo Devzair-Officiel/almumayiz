@@ -39,5 +39,33 @@ export default async function BlogPage({ params }: { params: Promise<{ lang: str
   if (!isLocale(lang)) notFound();
   const articles = await listPublishedArticles(lang);
   const t = blogCopy[lang];
-  return <><BlogHeader locale={lang} /><main><section className="blog-hero"><div className="page-shell"><p className="eyebrow">AL MUMAYIZ · {t.blog}</p><h1>{t.title}</h1><p>{t.intro}</p></div></section><section className="blog-list page-shell">{articles.length ? articles.map((article) => <ArticleCard key={article.id} article={article} locale={lang} />) : <div className="blog-empty"><h2>{t.empty}</h2><p>{t.intro}</p></div>}</section></main><BlogFooter locale={lang} /></>;
+
+  return (
+    <>
+      <BlogHeader locale={lang} />
+      <main>
+        <section className="blog-hero">
+          <div className="page-shell">
+            <p className="eyebrow">AL MUMAYIZ · {t.blog}</p>
+            <h1>{t.title}</h1>
+            <p>{t.intro}</p>
+          </div>
+        </section>
+        <section className="blog-list page-shell">
+          {articles.length
+            ? articles.map((article) => (
+                <ArticleCard key={article.id} article={article} locale={lang} />
+              ))
+            : (
+                <div className="blog-empty">
+                  <h2>{t.empty}</h2>
+                  <p>{t.intro}</p>
+                </div>
+              )
+          }
+        </section>
+      </main>
+      <BlogFooter locale={lang} />
+    </>
+  );
 }
